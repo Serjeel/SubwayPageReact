@@ -1,0 +1,17 @@
+body {
+    background-color: gainsboro;
+    font-family: Noto Sans, sans-serif;
+    --yellow-color: #F1B000;
+    --light-yellow-color: #F5C300;
+    --gray-color: rgb(148, 144, 144, 0.3);
+    --light-gray-color: #767675;
+}
+
+.main-form {
+    display: flex;
+}
+
+.categories_and_orders-block {
+    margin-left: 30px;
+    width: 300px;
+}

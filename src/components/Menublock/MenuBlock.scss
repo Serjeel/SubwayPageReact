@@ -1,0 +1,12 @@
+.menu-block {
+    width: 80%;
+}
+
+.items-block {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.logo {
+    width: 200px;
+}
