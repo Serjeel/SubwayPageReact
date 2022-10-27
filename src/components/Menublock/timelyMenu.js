@@ -1,4 +1,4 @@
-export const menu = [
+export const menu = [ // При переносе в БД не забыть заменить "i/ на "/i/
     {
       "name": "Овощной",
       "description": "Соус и овощи на выбор",
@@ -664,7 +664,7 @@ export const menu = [
     {
       "name": "Цезарь",
       "description": "С куриным филе, салатом, сыром Пармезан и сухариками",
-      "image": "i/salads/salad.png",
+      "image": "/i/salads/salad.png",
       "price": 135,
       "category": "salads",
       "market": "sfc",
@@ -674,7 +674,7 @@ export const menu = [
     {
       "name": "Лукошко",
       "description": "С куриным филе, жареными грибочками, соленым огурцами и сыром",
-      "image": "i/salads/lukoshko.png",
+      "image": "/i/salads/lukoshko.png",
       "price": 125,
       "category": "salads",
       "market": "sfc",
@@ -684,7 +684,7 @@ export const menu = [
     {
       "name": "Салат с тунцом",
       "description": "Тунец с салатом, болгарским перцем, маслинами и кукурузой",
-      "image": "i/salads/saladtun.png",
+      "image": "/i/salads/saladtun.png",
       "price": 143,
       "category": "salads",
       "market": "sfc",
@@ -694,7 +694,7 @@ export const menu = [
     {
       "name": "Курица с яблоком и апельсином",
       "description": "салат, яблоко, апельсин, огурец свежий, куриное филе",
-      "image": "i/salads/salad.png",
+      "image": "/i/salads/salad.png",
       "price": 120,
       "category": "salads",
       "market": "sfc",
@@ -704,7 +704,7 @@ export const menu = [
     {
       "name": "Курица с грецким орехом и черносливом",
       "description": "салат, орех, чернослив, куриное филе с чесночным соусом",
-      "image": "i/salads/salad.png",
+      "image": "/i/salads/salad.png",
       "price": 120,
       "category": "salads",
       "market": "sfc",
@@ -714,7 +714,7 @@ export const menu = [
     {
       "name": "Салат греческий",
       "description": "Салат, помидоры, огурцы, маслины, болгар. перец, Фета",
-      "image": "i/salads/salad.png",
+      "image": "/i/salads/salad.png",
       "price": 130,
       "category": "salads",
       "market": "sfc",
@@ -724,7 +724,7 @@ export const menu = [
     {
       "name": "Мини-тортилья",
       "description": "Мини-лепешка, куриное филе, сыр, салат, помидор",
-      "image": "i/salads/tortiliya.png",
+      "image": "/i/salads/tortiliya.png",
       "price": 67,
       "category": "salads",
       "market": "sfc",
@@ -734,7 +734,7 @@ export const menu = [
     {
       "name": "Тортилья SFC",
       "description": "Куриное филе SFC, салат, помидор, сыр, майонез",
-      "image": "i/salads/tortiliya.png",
+      "image": "/i/salads/tortiliya.png",
       "price": 124,
       "category": "salads",
       "market": "sfc",
@@ -744,7 +744,7 @@ export const menu = [
     {
       "name": "Тортилья пири-пири",
       "description": "С острой курицей Пири-пири, салат, помидор, майонез, сыр",
-      "image": "i/salads/tortiliya.png",
+      "image": "/i/salads/tortiliya.png",
       "price": 133,
       "category": "salads",
       "market": "sfc",

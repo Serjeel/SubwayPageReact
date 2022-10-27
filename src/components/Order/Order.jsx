@@ -27,14 +27,15 @@ function Order() {
             </div>
             <div className="order-items-block">
 
-            {orderItems.map((item, i) => (
-                <div className="order-items" id="order-${i + 1}">
-                <p className="order-title" 
-                id="">{item.title}</p>
-                    <p className="order-amount">{item.amount}</p>
-                    <p className="order-price">{item.price * item.amount} руб.</p>
-                    <img className="delete-icon" id="delete-${i + 1}" src={TrashBasket}/>
-                </div>))}
+                {orderItems.map((item, i) => (
+                    <div className="order-items" id={`order-${i + 1}`} key={`order-${i + 1}`}>
+                        <p className="order-title"
+                            >{item.title}</p>
+                        <p className="order-amount">{item.amount}</p>
+                        <p className="order-price">{item.price * item.amount} руб.</p>
+                        <img className="delete-icon" id={`delete-${i + 1}`} key={`delete-${i + 1}`}
+                            src={TrashBasket} />
+                    </div>))}
 
             </div>
             <div>

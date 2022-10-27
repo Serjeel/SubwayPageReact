@@ -11,7 +11,7 @@ function App() {
   return (
     <div className="App">
       <MainHeader />
-      <div class="main-form">
+      <div className="main-form">
         <div className="categories_and_orders-block">
           <MenuCategories selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
           <Order />
