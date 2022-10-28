@@ -82,6 +82,9 @@ export const reducer = (state = defaultState, action) => {
 
       case constants.SET_PREVIOUS_VALUES:
       return {...state, previousValues: action.payload}
+
+      case constants.SET_ITEMS_INFO:
+      return {...state, items: action.payload}
     default:
       return state;
   }

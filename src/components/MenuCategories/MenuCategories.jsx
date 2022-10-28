@@ -1,26 +1,20 @@
 import React, { useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { setSelectedTab } from '../../redux/actions';
+
+import { categories } from '../constants';
 import './MenuCategories.scss';
 
 function MenuCategories() {
     const dispatch = useDispatch();
 
     const selectedTab = useSelector(state => state.selectedTab)
+    console.log(selectedTab);
 
     const changeCategory = (key) => {
         dispatch(setSelectedTab(key));
     };
 
-    const categories = {
-        pancakes: "Блины",
-        shaurma: "Шаурма",
-        sandwiches: "Сэндвичи",
-        burgers: "Бургеры",
-        chicken: "Курица & Картофель",
-        salads: "Тортилья & Салаты",
-        drinks: "Напитки & Десерты"
-    };
     // Возможно здесь не нужен id в принципе, а только key для галочки
 
     return (
