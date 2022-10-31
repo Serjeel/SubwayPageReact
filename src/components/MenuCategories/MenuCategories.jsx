@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { setSelectedTab } from '../../redux/actions';
 

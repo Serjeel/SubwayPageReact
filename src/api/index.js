@@ -50,13 +50,13 @@ export async function getRegistration(inputsContent) {
     return data;
 }
 
-/*export async function getAllOrders() {
+export async function getAllOrders(username) {
     let data = {};
-    await axios.get(`http://localhost:8000/order/getAllOrders?username=${storage.data.username}`)
+    await axios.get(`http://localhost:8000/order/getAllOrders?username=${username}`)
         .then(res => { data = res.data });
 
     return data;
-}*/
+}
 
 /*export async function getCreateNewOrder(i) {
     let data = {};

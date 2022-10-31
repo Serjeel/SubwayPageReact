@@ -1,7 +1,9 @@
 import constants from './constans';
+import Cookies from 'js-cookie';
+import Decode from "jwt-decode"
 
 const defaultState = {
-    /*username: Cookies.get('token') ? Decode(Cookies.get('token')).username : "",*/
+    username: Cookies.get('token') ? Decode(Cookies.get('token')).username : "",
     isAuthorized: false,
     selectedTab: "sandwiches",
     selectedModalTab: "sizes",

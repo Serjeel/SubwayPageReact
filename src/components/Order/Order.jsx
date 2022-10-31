@@ -1,18 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TrashBasket from '../../i/trash.svg'
 import ShoppingBasket from '../../i/basket.svg'
 import './Order.scss';
+import { useSelector } from 'react-redux';
 
 function Order() {
     // const [username, setUsername] = useState("peter");
-    const orderItems = [
-        {
-            title: "ФишБургер",
-            username: "peter",
-            amount: 1,
-            price: 120,
-        }
-    ]
+    const orderItems = useSelector(state => state.orderItems)
+    const totalPrice = useSelector(state => state.totalPrice)
 
     return (
         <div className="order">
@@ -26,7 +21,6 @@ function Order() {
                 <p className="price-header">Цена</p>
             </div>
             <div className="order-items-block">
-
                 {orderItems.map((item, i) => (
                     <div className="order-items" id={`order-${i + 1}`} key={`order-${i + 1}`}>
                         <p className="order-title"
@@ -36,12 +30,11 @@ function Order() {
                         <img className="delete-icon" id={`delete-${i + 1}`} key={`delete-${i + 1}`}
                             src={TrashBasket} />
                     </div>))}
-
             </div>
             <div>
                 <div className="sum">
                     <p className="sum-text">Цена: </p>
-                    <p className="sum-value" id="sum">0</p>
+                    <p className="sum-value" id="sum">{totalPrice}</p>
                     <p className="sum-currency">руб.</p>
                 </div>
             </div>
