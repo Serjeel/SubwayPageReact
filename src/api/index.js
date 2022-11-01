@@ -1,131 +1,152 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-export async function getItemsInfo() {
+async function makeRequest(requestType, requestUrl, requestData) {
+    console.log(requestType);
+    console.log(requestUrl);
+    console.log(requestData);
+
     let data = {};
-    await axios.get(`http://localhost:8000/food/getAllFood`)
-        .then(res => { data = res.data[0] });
-    return data;
-}
-
-export async function getAuthentification(inputsContent) {
-    let data = {}
-    await axios.post('http://localhost:8000/user/login', {
-        username: inputsContent.logUsername.toLowerCase(),
-        password: inputsContent.logPassword
-    }).then(res => { data = res.data });
-
-    return data;
-}
-
-export async function getAuthorization() {
-    let data = {};
-    try {
-        await axios.get(`http://localhost:8000/user/protected`, {
+    if (requestData) {
+        await axios[requestType](requestUrl, requestData, {
             headers: {
                 Authorization: Cookies.get("token")
             }
-        })
-            .then(res => { data = res.data });
-    } catch {
-        data = {
-            success: false,
-            user: {
-                id: "",
-                username: ""
+        }).then(res => { data = res.data }).catch(err => {});
+    } else {
+        await axios[requestType](requestUrl, {
+            headers: {
+                Authorization: Cookies.get("token")
             }
-        }
+        }).then(res => { data = res.data }).catch(err => {});
     }
 
+    console.log(data);
+
     return data;
+}
+
+export async function getItemsInfo() {
+    return makeRequest('get', 'http://localhost:8000/food/getAllFood', {})
+}
+
+export async function getAuthentification(inputsContent) {
+    return makeRequest('post', 'http://localhost:8000/user/login', {
+        username: inputsContent.logUsername.toLowerCase(),
+        password: inputsContent.logPassword
+    })
+}
+
+export async function getAuthorization() {
+    return makeRequest('get', 'http://localhost:8000/user/protected')
 }
 
 export async function getRegistration(inputsContent) {
-    let data = {};
-    await axios.post('http://localhost:8000/user/register', {
+    return makeRequest('post', 'http://localhost:8000/user/register', {
         username: inputsContent.regUsername.toLowerCase(),
         password: inputsContent.regPassword
-    }).then(res => { data = res.data });
-
-    return data;
+    })
 }
 
 export async function getAllOrders(username) {
-    let data = {};
-    await axios.get(`http://localhost:8000/order/getAllOrders?username=${username}`)
-        .then(res => { data = res.data });
-
-    return data;
+    return makeRequest('get', `http://localhost:8000/order/getAllOrders?username=${username}`)
 }
 
-/*export async function getCreateNewOrder(i) {
+export async function getCreateNewOrder(i, items, username, countersValue) {
+    return makeRequest('post', 'http://localhost:8000/order/createNewOrder', {
+        title: items[i].name,
+        username: username,
+        amount: countersValue[i]
+    })/*
     let data = {};
     await axios.post('http://localhost:8000/order/createNewOrder', {
-        title: storage.data.items[i].name,
-        username: storage.data.username,
-        amount: storage.data.countersValue[i]
+        title: items[i].name,
+        username: username,
+        amount: countersValue[i]
     }, {
         headers: {
             Authorization: Cookies.get("token")
         }
     }).then(res => { data = res.data });
 
-    return data;
-}*/
+    return data;*/
+}
 
-/*export async function getCreateNewSandwichOrder() {
+export async function getCreateNewSandwichOrder(modalContent, username, tabReadyContent) {
+    return makeRequest('post', 'http://localhost:8000/order/createNewOrder', {
+        title: modalContent.title,
+        username: username,
+        amount: modalContent.amount,
+        size: tabReadyContent.size,
+        bread: tabReadyContent.bread,
+        vegetables: tabReadyContent.vegetables,
+        sauces: tabReadyContent.sauces,
+        fillings: tabReadyContent.fillings
+    })/*
     let data = {};
     await axios.post('http://localhost:8000/order/createNewOrder', {
-        title: storage.data.modalContent.title,
-        username: storage.data.username,
-        amount: storage.data.modalContent.amount,
-        size: storage.data.tabReadyContent.size,
-        bread: storage.data.tabReadyContent.bread,
-        vegetables: storage.data.tabReadyContent.vegetables,
-        sauces: storage.data.tabReadyContent.sauces,
-        fillings: storage.data.tabReadyContent.fillings
+        title: modalContent.title,
+        username: username,
+        amount: modalContent.amount,
+        size: tabReadyContent.size,
+        bread: tabReadyContent.bread,
+        vegetables: tabReadyContent.vegetables,
+        sauces: tabReadyContent.sauces,
+        fillings: tabReadyContent.fillings
     }, {
         headers: {
             Authorization: Cookies.get("token")
         }
     }).then(res => { data = res.data });
 
-    return data;
-}*/
+    return data;*/
+}
 
-/*export async function getChangeOrderInfo() {
+export async function getChangeOrderInfo(changeableOrderItem, modalContent, tabReadyContent) {
+    return makeRequest('patch', 'http://localhost:8000/order/changeOrderInfo', {
+        orderId: changeableOrderItem.orderId,
+        amount: modalContent.amount,
+        size: tabReadyContent.size,
+        bread: tabReadyContent.bread,
+        vegetables: tabReadyContent.vegetables,
+        sauces: tabReadyContent.sauces,
+        fillings: tabReadyContent.fillings
+    })/*
     let data = {};
     await axios.patch('http://localhost:8000/order/changeOrderInfo', {
-        orderId: storage.data.changeableOrderItem.orderId,
-        amount: storage.data.modalContent.amount,
-        size: storage.data.tabReadyContent.size,
-        bread: storage.data.tabReadyContent.bread,
-        vegetables: storage.data.tabReadyContent.vegetables,
-        sauces: storage.data.tabReadyContent.sauces,
-        fillings: storage.data.tabReadyContent.fillings
+        orderId: changeableOrderItem.orderId,
+        amount: modalContent.amount,
+        size: tabReadyContent.size,
+        bread: tabReadyContent.bread,
+        vegetables: tabReadyContent.vegetables,
+        sauces: tabReadyContent.sauces,
+        fillings: tabReadyContent.fillings
     }, {
         headers: {
             Authorization: Cookies.get("token")
         }
     }).then(res => { data = res.data });
 
-    return data;
-}*/
+    return data;*/
+}
 
-/*export async function getDeleteOrder(i) {
+export async function getDeleteOrder(i, orderItems) {
+    return makeRequest('delete', `http://localhost:8000/order/deleteOrder?orderId=${orderItems[i].orderId}`)
+    /*
     let data = {};
     await axios.delete(
         `http://localhost:8000/order/deleteOrder?orderId=${orderItems[i].orderId}`, {
         headers: {
             Authorization: Cookies.get("token")
         }
-    }).then(res => { data = res.data });
+    }).then(res => { data = res.data }).catch(err => alert("Ошибка!" + err));
 
-    return data;
-}*/
+    return data;*/
+}
 
 export async function getCreateNewCompletedOrder() {
-    let data = {};
+    return makeRequest('post', 'http://localhost:8000/completedOrder/createNewCompletedOrder', {})
+    /*let data = {};
     await axios.post(
         'http://localhost:8000/completedOrder/createNewCompletedOrder', {}, {
         headers: {
@@ -133,5 +154,5 @@ export async function getCreateNewCompletedOrder() {
         }
     }).then(res => { data = res.data })
 
-    return data;
+    return data;*/
 }

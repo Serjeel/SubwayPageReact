@@ -104,7 +104,7 @@ module.exports.deleteOrder = async (req, res, next) => {
     Order.deleteOne({ orderId: req.query.orderId }).then(result =>
       Order.find({ username: req.query.username }).then(result => {
         res.send(result)
-      }))
+      })).catch(err => console.log(err))
   } else {
     res.status(422).send('Error! Incorrect user');
   }

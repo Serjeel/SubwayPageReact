@@ -2,24 +2,27 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 import Ingredient from '../Ingredient/Ingredient';
-import { getAuthentification, getRegistration } from '../../api';
+import { getAuthentification, getChangeOrderInfo, getCreateNewSandwichOrder, getRegistration } from '../../api';
 import CloseIcon from '../../i/close-icon.svg';
 import PlusIcon from '../../i/plus.svg';
 import MinusIcon from '../../i/minus.svg';
 import ResultImage from '../../i/result_sandwich.jpg'
-import { setCountersValue, setModalContent, setModalWindowAddShow, setModalWindowAuthorizationShow, setModalWindowEditShow, setPreviousValues, setSelectedAuthorizationTab, setSelectedModalTab } from '../../redux/actions';
+import { setCountersValue, setModalContent, setModalWindowAddShow, setModalWindowAuthorizationShow, setModalWindowEditShow, setOrderItems, setPreviousValues, setSandwiches, setSelectedAuthorizationTab, setSelectedModalTab, setTabReadyContent, setTotalPrice } from '../../redux/actions';
 
 import './ModalWindowSandwich.scss';
 
 function ModalWindowSandwich() {
     const dispatch = useDispatch();
+    const username = useSelector(state => state.username);
     const ingredients = useSelector(state => state.ingredients);
     const selectedModalTab = useSelector(state => state.selectedModalTab);
     const modalContent = useSelector(state => state.modalContent);
     const tabReadyContent = useSelector(state => state.tabReadyContent);
     const modalWindowAddShow = useSelector(state => state.modalWindowAddShow);
     const modalWindowEditShow = useSelector(state => state.modalWindowEditShow);
-    const countersValue = useSelector(state => state.countersValue);
+    const totalPrice = useSelector(state => state.totalPrice);
+    const orderItems = useSelector(state => state.orderItems);
+    const changeableOrderItem = useSelector(state => state.changeableOrderItem);
 
     const tabs = {
         sizes: "Размер",
@@ -69,6 +72,113 @@ function ModalWindowSandwich() {
             content.amount = 1;
             dispatch(setModalContent(content))
             target.value = 1;
+        }
+    }
+
+    const handleButtonModalClick = () => {
+        setSelectedModalTab("sizes");
+        if (modalWindowAddShow) {
+            dispatch(setModalWindowAddShow(false));
+
+            const CreateOrder = async () => {
+                const data = await getCreateNewSandwichOrder(modalContent, username, tabReadyContent);
+
+
+                let orders = orderItems.slice(0);
+                let newItem = data[0];
+
+                let vegetables = [];
+                let sauces = [];
+                let fillings = [];
+
+                for (let i in newItem.vegetables) {
+                    vegetables.push(newItem.vegetables[i].name)
+                }
+
+                for (let i in newItem.sauces) {
+                    sauces.push(newItem.sauces[i].name)
+                }
+
+                for (let i in newItem.fillings) {
+                    fillings.push(newItem.fillings[i].name)
+                }
+
+                newItem.vegetables = vegetables;
+                newItem.sauces = sauces;
+                newItem.fillings = fillings;
+
+                orders.push(newItem)
+
+                dispatch(setOrderItems(orders));
+                dispatch(setSandwiches(orders.filter(item => item.bread)));
+
+                dispatch(setTotalPrice(totalPrice + (newItem.price *
+                    newItem.amount)));
+                dispatch(setTabReadyContent({
+                    size: "15 См",
+                    bread: "Белый итальянский",
+                    vegetables: [],
+                    sauces: [],
+                    fillings: []
+                }))
+            }
+
+            CreateOrder();
+        }
+        if (modalWindowEditShow) {
+            dispatch(setModalWindowEditShow(false));
+
+            const ChangeOrder = async () => {
+                const data = await getChangeOrderInfo(changeableOrderItem, modalContent, tabReadyContent);
+
+                let orders = orderItems;
+                let changedItem = data[0];
+
+                let vegetables = [];
+                let sauces = [];
+                let fillings = [];
+
+                for (let i in changedItem.vegetables) {
+                    vegetables.push(changedItem.vegetables[i].name)
+                }
+
+                for (let i in changedItem.sauces) {
+                    sauces.push(changedItem.sauces[i].name)
+                }
+
+                for (let i in changedItem.fillings) {
+                    fillings.push(changedItem.fillings[i].name)
+                }
+
+                let changeableItem = orderItems.find(i => i.orderId ===
+                    changeableOrderItem.orderId);
+                let previousPrice = changeableItem.price * changeableItem.amount;
+
+                orders.find(item => item.orderId === changeableOrderItem.orderId).size = changedItem.size;
+                orders.find(item => item.orderId === changeableOrderItem.orderId).bread = changedItem.bread;
+                orders.find(item => item.orderId === changeableOrderItem.orderId).vegetables = vegetables;
+                orders.find(item => item.orderId === changeableOrderItem.orderId).sauces = sauces;
+                orders.find(item => item.orderId === changeableOrderItem.orderId).fillings = fillings;
+
+                orders.find(item => item.orderId === changeableOrderItem.orderId).amount = modalContent.amount;
+                orders.find(item => item.orderId === changeableOrderItem.orderId).price =
+                    modalContent.price;
+
+                dispatch(setOrderItems(orders));
+                dispatch(setSandwiches(orders.filter(item => item.bread)))
+
+                dispatch(setTotalPrice(totalPrice + (modalContent.price *
+                    modalContent.amount) - previousPrice));
+                dispatch(setTabReadyContent({
+                    size: "15 См",
+                    bread: "Белый итальянский",
+                    vegetables: [],
+                    sauces: [],
+                    fillings: []
+                }))
+            }
+
+            ChangeOrder();
         }
     }
 
@@ -156,8 +266,9 @@ function ModalWindowSandwich() {
                                                 onClick={() => handlePlusClick()} alt="plus" />
                                         </button>
                                     </div>
-                                    <button className="item-button" id="button-modal">{modalWindowAddShow ?
-                                        "В КОРЗИНУ" : (modalWindowEditShow ? "ИЗМЕНИТЬ" : [])}</button>
+                                    <button className="item-button" id="button-modal" onClick={() =>
+                                        handleButtonModalClick()}>{modalWindowAddShow ? "В КОРЗИНУ" :
+                                            (modalWindowEditShow ? "ИЗМЕНИТЬ" : [])}</button>
                                 </>
                             }
                         </div>

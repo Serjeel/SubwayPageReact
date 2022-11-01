@@ -1,5 +1,6 @@
 module.exports.validateUserOrderDeleteChange = (token, selectedOrder) => {
-    if (selectedOrder.username === token.username) {
+    console.log(selectedOrder);
+    if (selectedOrder && selectedOrder.username === token.username) {
         return true
     } else {
         return false

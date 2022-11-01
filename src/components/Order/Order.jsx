@@ -3,7 +3,8 @@ import TrashBasket from '../../i/trash.svg'
 import ShoppingBasket from '../../i/basket.svg'
 import './Order.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { setChangeableOrderItem, setModalContent, setModalWindowEditShow, setPreviousValues, setSelectedModalTab, setTabReadyContent } from '../../redux/actions';
+import { setChangeableOrderItem, setModalContent, setModalWindowEditShow, setOrderItems, setPreviousValues, setSandwiches, setSelectedModalTab, setTabReadyContent, setTotalPrice } from '../../redux/actions';
+import { getCreateNewCompletedOrder, getDeleteOrder } from '../../api';
 
 function Order() {
     const dispatch = useDispatch();
@@ -46,6 +47,50 @@ function Order() {
         }))
     }
 
+    const handleDeleteIconClick = (i) => {
+
+        const DeleteOrder = async () => {
+            const data = await getDeleteOrder(i, orderItems);
+
+            let orders = orderItems.slice(0);
+            let sandwichItems = sandwiches.slice(0);
+
+            dispatch(setTotalPrice(totalPrice - (orderItems[i].price *
+                orderItems[i].amount)));
+
+            const deletedSandwich = sandwichItems.find(arr => arr.orderId ===
+                orderItems[i].orderId);
+            if (deletedSandwich) {
+                const n = sandwichItems.findIndex(arr => arr.orderId ===
+                    deletedSandwich.orderId)
+                sandwichItems.splice(n, 1);
+            }
+            orders.splice(i, 1);
+
+            dispatch(setSandwiches(sandwichItems));
+            dispatch(setOrderItems(orders));
+        }
+
+        DeleteOrder();
+    }
+
+    const handleComleteOrderButtonClick = () => {
+
+        const CompleteOrder = async () => {
+            const data = await getCreateNewCompletedOrder();
+            if (!data.status) {
+                dispatch(setSandwiches([]));
+                dispatch(setOrderItems([]));
+                dispatch(setTotalPrice(0));
+                alert("Заказ оформлен");
+            } else {
+                alert(data.status);
+            }
+        }
+
+        CompleteOrder();
+    }
+
     return (
         <div className="order">
             <div className="order-head">
@@ -61,11 +106,11 @@ function Order() {
                 {orderItems.map((item, i) => (
                     <div className="order-items" id={`order-${i + 1}`} key={`order-${i + 1}`}>
                         <p className={item.bread ? "sandwich-title" : "order-title"}
-                        onClick={() => item.bread ? handleOrderClick(i) : {}}>{item.title}</p>
+                            onClick={() => item.bread ? handleOrderClick(i) : {}}>{item.title}</p>
                         <p className="order-amount">{item.amount}</p>
                         <p className="order-price">{item.price * item.amount} руб.</p>
                         <img className="delete-icon" id={`delete-${i + 1}`} key={`delete-${i + 1}`}
-                            src={TrashBasket} />
+                            src={TrashBasket} onClick={() => handleDeleteIconClick(i)} />
                     </div>))}
             </div>
             <div>
@@ -75,7 +120,7 @@ function Order() {
                     <p className="sum-currency">руб.</p>
                 </div>
             </div>
-            <button className="order-button">ОФОРМИТЬ ЗАКАЗ</button>
+            <button className="order-button" onClick={() => handleComleteOrderButtonClick()}>ОФОРМИТЬ ЗАКАЗ</button>
         </div>
     );
 }

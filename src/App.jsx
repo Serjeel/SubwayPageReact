@@ -30,20 +30,20 @@ function App() {
     const data = await getItemsInfo();
 
     let countersValue = [];
-    data.menu.forEach(() => {
+    data[0].menu.forEach(() => {
       countersValue.push(1)
     });
 
     dispatch(setCountersValue(countersValue));
 
-    dispatch(setItems(data.menu));
+    dispatch(setItems(data[0].menu));
 
     dispatch(setIngredients({
-      sizes: data.sizes,
-      breads: data.breads,
-      vegetables: data.vegetables,
-      sauces: data.sauces,
-      fillings: data.fillings
+      sizes: data[0].sizes,
+      breads: data[0].breads,
+      vegetables: data[0].vegetables,
+      sauces: data[0].sauces,
+      fillings: data[0].fillings
     }))
   }
 
@@ -93,7 +93,6 @@ function App() {
 
   const Authorization = async () => {
     const auth = await getAuthorization();
-
     if (auth.success) {
       dispatch(setIsAuthorized(auth.success));
     } else {

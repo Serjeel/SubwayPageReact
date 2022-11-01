@@ -2,8 +2,9 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PlusIcon from '../../i/plus.svg'
 import MinusIcon from '../../i/minus.svg'
-import { setCountersValue, setModalContent, setModalWindowAddShow, setModalWindowAuthorizationShow, setSelectedModalTab, setTabReadyContent } from '../../redux/actions';
+import { setCountersValue, setModalContent, setModalWindowAddShow, setModalWindowAuthorizationShow, setOrderItems, setSelectedModalTab, setTabReadyContent, setTotalPrice } from '../../redux/actions';
 import './MenuItem.scss';
+import { getCreateNewOrder } from '../../api';
 
 function MenuItem({ item, i, logo }) {
     // const [username, setUsername] = useState("peter");
@@ -13,6 +14,8 @@ function MenuItem({ item, i, logo }) {
     const items = useSelector(state => state.items);
     const selectedTab = useSelector(state => state.selectedTab);
     const username = useSelector(state => state.username);
+    const totalPrice = useSelector(state => state.totalPrice);
+    const orderItems = useSelector(state => state.orderItems);
 
     const handlePlusClick = () => {
         let value = countersValue.slice(0);
@@ -58,12 +61,20 @@ function MenuItem({ item, i, logo }) {
                     fillings: []
                 }))
             } else {
-                /* const CreateOrder = async () => {
-                     const order = await getCreateNewOrder(i);
-                     await setCreateNewOrder(order, i);
-                 }
- 
-                 CreateOrder();*/
+                const CreateOrder = async () => {
+                    const data = await getCreateNewOrder(i - 1, items, username, countersValue);
+
+                    let orders = orderItems.slice(0);
+                    let newItem = data[0];
+
+                    orders.push(newItem);
+
+                    dispatch(setOrderItems(orders));
+                    dispatch(setTotalPrice(totalPrice + (items[i].price
+                        * countersValue[i])))
+                }
+
+                CreateOrder();
             }
         } else {
             alert("Сначала нужно авторизоваться!");

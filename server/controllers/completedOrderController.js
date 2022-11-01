@@ -15,13 +15,17 @@ module.exports.createNewCompletedOrder = async (req, res, next) => {
         orderItems = result
     });
 
-    const order = new CompletedOrder({
-        username: token.username,
-        date: Date.now(),
-        price: calculateCompletedPrice(orderItems),
-        orderItems
-    });
-    await order.save().then(result => CompletedOrder.find())
-        .then(result => { res.send(result) });
-    await Order.deleteMany({ username: token.username })
+    if (orderItems.length >= 1) {
+        const order = new CompletedOrder({
+            username: token.username,
+            date: Date.now(),
+            price: calculateCompletedPrice(orderItems),
+            orderItems
+        });
+        await order.save().then(result => CompletedOrder.find())
+            .then(result => { res.send(result) });
+        await Order.deleteMany({ username: token.username })
+    } else {
+        res.send({ status: "Ничего не выбрано" })
+    }
 }
