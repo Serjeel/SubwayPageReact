@@ -7,6 +7,7 @@ import MenuCategories from './components/MenuCategories/MenuCategories';
 import Order from './components/Order/Order';
 import MenuBlock from './components/Menublock/MenuBlock';
 import ModalWindowAuthorization from './components/ModalWindowAuthorization/ModalWindowAuthorization';
+import ModalWindowSandwich from './components/ModalWindowSandwich/ModalWindowSandwich';
 import './App.scss';
 import { getItemsInfo, getAllOrders, getAuthorization } from './api';
 import { setCountersValue, setIngredients, setIsAuthorized, setItems, setOrderItems, setSandwiches, setTotalPrice } from './redux/actions';
@@ -15,7 +16,9 @@ import { useEffect } from 'react';
 function App() {
   const dispatch = useDispatch();
   const username = useSelector(state => state.username);
-  const modalWindowAuthorizationShow = useSelector(state => state.modalWindowAuthorizationShow)
+  const modalWindowAuthorizationShow = useSelector(state => state.modalWindowAuthorizationShow);
+  const modalWindowAddShow = useSelector(state => state.modalWindowAddShow);
+  const modalWindowEditShow = useSelector(state => state.modalWindowEditShow);
 
   useEffect(() => {
     Items();
@@ -110,6 +113,7 @@ function App() {
       </div>
       <div className="modal-block">
         {modalWindowAuthorizationShow && <ModalWindowAuthorization/>}
+        {(modalWindowAddShow || modalWindowEditShow) && <ModalWindowSandwich/>}
       </div>
     </div>
   );

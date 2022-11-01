@@ -1,0 +1,219 @@
+.modal-sandwich-window {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-sandwich-content {
+    width: 900px;
+    height: 570px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: gainsboro;
+    border-radius: 5px;
+}
+
+.modal-header-block {
+    width: 100%;
+    display: flex;
+    background-color: var(--yellow-color);
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.modal-header {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    font-weight: 300;
+    color: white;
+    margin: 0;
+}
+
+.close-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.modal-tabs-block {
+    height: 50px;
+    margin-top: 15px;
+}
+
+.modal-tabs {
+    width: 800px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.tab-active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding-left: 30px;
+    padding-right: 30px;
+    color: white;
+    background-color: #D96746;
+}
+
+.arrows-block {
+    display: flex;  
+    justify-content: space-between;
+    width: 800px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.arrow {
+    cursor: pointer;
+    width: 100px;
+    height: 30px;
+    background-color: #D96746;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.tab-content-block {
+    background-color: gainsboro;
+    width: 85%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    overflow: auto;
+}
+
+.modal-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.modal-item-active {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+    background-color: var(--yellow-color);
+}
+
+.modal-item:hover {
+    cursor: pointer;
+    background-color: #F6D846;
+}
+
+.image-block {
+    width: 200px;
+    height: 270px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.result-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 100%;
+    border: 10px solid var(--yellow-color);
+}
+
+.final-order-block {
+    width: 450px;
+    height: 270px;
+    margin-left: 30px;
+}
+
+.final-order-ready {
+    font-size: 20px;
+    border-bottom: 2px solid var(--light-gray-color);
+}
+
+.final-order-size,
+.final-order-bread,
+.final-order-vegetables,
+.final-order-sauces {
+    margin: 0;
+    display: flex;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.final-order-filling {
+    display: flex;
+    font-size: 14px;
+    border-bottom: 2px solid var(--light-gray-color);
+    padding-bottom: 20px;
+    margin-top: 10px;
+}
+
+.final-order-size-text,
+.final-order-bread-text,
+.final-order-vegetables-text,
+.final-order-sauces-text,
+.final-order-filling-text {
+    margin: 0;
+}
+
+.final-order-size-value,
+.final-order-bread-value,
+.final-order-vegetables-value,
+.final-order-sauces-value,
+.final-order-filling-value  {
+    margin: 0;
+    margin-left: 5px;
+}
+
+.final-order-title {
+    padding-top: 20px;
+    font-size: 20px;
+    margin: 0;
+}
+
+.modal-footer {
+    width: 100%;
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    margin-top: auto;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.modal-order-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

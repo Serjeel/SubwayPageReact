@@ -1,0 +1,107 @@
+.item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.item-image {
+    width: 180px;
+    height: 180px;
+    background-color: white;
+    border-radius: 100%;
+    border: 10px solid var(--yellow-color);
+    margin-top: 10px;
+    box-shadow: 0px 0px 10px 0px gray;
+}
+
+.item-name {
+    display: flex;
+    justify-content: center;
+    width: 180px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    border-bottom: 2px solid var(--light-gray-color);
+    text-align: center;
+    font-weight: 600;
+    font-size: 20px;
+    padding-bottom: 10px;
+}
+
+.item-price-block {
+    display: flex;
+    margin-bottom: 0;
+    color: #D96746;
+    font-weight: 600;
+    font-size: 17px;
+}
+
+.price-text,
+.price-value,
+.price-currency {
+    margin-bottom: 0;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+.amount-block {
+    width: 115px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.minus-icon {
+    cursor: pointer;
+    background-color: var(--gray-color);
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    box-shadow: 0px 0px 10px 0px gray;
+}
+
+
+.item-counter {
+    width: 40px;
+    height: 20px;
+    text-align: center;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0px 0px 10px 0px gray;
+}
+
+.plus-icon {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    background-color: var(--gray-color);
+    border-radius: 100%;
+    box-shadow: 0px 0px 10px 0px gray;
+}
+
+.item-button {
+    cursor: pointer;
+    width: 130px;
+    height: 30px;
+    margin-top: 10px;
+    background-color: var(--yellow-color);
+    color: white;
+    font-weight: 600;
+    font-size: 15px;
+    border-style: none;
+    border-bottom: 1px solid black;
+    border-radius: 3px;
+}
+
+.item-button-active {
+    cursor: pointer;
+    width: 130px;
+    height: 30px;
+    margin-top: 10px;
+    background-color: rgb(51, 221, 51);
+    color: white;
+    font-weight: 600;
+    font-size: 15px;
+    border-style: none;
+    border-bottom: 1px solid black;
+    border-radius: 3px;
+}

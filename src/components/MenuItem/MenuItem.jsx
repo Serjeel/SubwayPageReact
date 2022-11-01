@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PlusIcon from '../../i/plus.svg'
 import MinusIcon from '../../i/minus.svg'
-import { setCountersValue } from '../../redux/actions';
+import { setCountersValue, setModalContent, setModalWindowAddShow, setModalWindowAuthorizationShow, setSelectedModalTab, setTabReadyContent } from '../../redux/actions';
 import './MenuItem.scss';
 
 function MenuItem({ item, i, logo }) {
@@ -10,6 +10,9 @@ function MenuItem({ item, i, logo }) {
     const dispatch = useDispatch();
 
     const countersValue = useSelector(state => state.countersValue);
+    const items = useSelector(state => state.items);
+    const selectedTab = useSelector(state => state.selectedTab);
+    const username = useSelector(state => state.username);
 
     const handlePlusClick = () => {
         let value = countersValue.slice(0);
@@ -37,10 +40,41 @@ function MenuItem({ item, i, logo }) {
         }
     }
 
+    const handleButtonClick = () => {
+        if (username) {
+            if (selectedTab === "sandwiches") {
+                dispatch(setSelectedModalTab("sizes"));
+                dispatch(setModalWindowAddShow(true));
+                dispatch(setModalContent({
+                    title: items[i - 1].name,
+                    amount: countersValue[i - 1],
+                    price: items[i - 1].price
+                }));
+                dispatch(setTabReadyContent({
+                    size: "15 См",
+                    bread: "Белый итальянский",
+                    vegetables: [],
+                    sauces: [],
+                    fillings: []
+                }))
+            } else {
+                /* const CreateOrder = async () => {
+                     const order = await getCreateNewOrder(i);
+                     await setCreateNewOrder(order, i);
+                 }
+ 
+                 CreateOrder();*/
+            }
+        } else {
+            alert("Сначала нужно авторизоваться!");
+            dispatch(setModalWindowAuthorizationShow(true));
+        }
+    }
+
     return (
         <div className="item" id={`item-${i}`}>
             <img className="logo" src={logo} alt="logo" />
-            <img className="item-image" src={require(`.${item.image}`)} alt="item-image" />
+            <img className="item-image" src={require(`.${item.image}`)} alt="item" />
             <p className="item-name">{item.name}</p>
             <p className="item-composition">{item.description}</p>
             <div className="item-price-block">
@@ -52,17 +86,18 @@ function MenuItem({ item, i, logo }) {
             <div className="amount-block">
                 <button className='counter-button'>
                     <img className="counter-icon" src={MinusIcon} id={`minus-${i}`}
-                        onClick={() => handleMinusClick()} />
+                        onClick={() => handleMinusClick()} alt="minus" />
                 </button>
                 <input className="item-counter" type="text" id={`counter-${i}`}
                     value={countersValue[i - 1]}
                     onChange={(e) => { handleInputChange(e.target) }} />
                 <button className='counter-button'>
                     <img className="counter-icon" src={PlusIcon} id={`plus-${i}`}
-                        onClick={() => handlePlusClick()} />
+                        onClick={() => handlePlusClick()} alt="plus" />
                 </button>
             </div>
-            <button className="item-button" id={`button-${i}`}>В КОРЗИНУ</button>
+            <button className="item-button" id={`button-${i}`} onClick={() =>
+                handleButtonClick()}>В КОРЗИНУ</button>
         </div>
     );
 }
